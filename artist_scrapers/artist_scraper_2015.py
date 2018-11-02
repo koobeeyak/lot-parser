@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from artist_scrapers.artist_scraper import ArtistScraper
 from models.artist import Artist
 from models.work import Work
+from utils.conversions import gbp_to_usd
 
 
 class ArtistScraper2015(ArtistScraper):
@@ -24,6 +25,9 @@ class ArtistScraper2015(ArtistScraper):
         work_name = soup.h3.text
         work_currency_and_price = soup.find_all('div')[1].text
         work_currency, work_price = work_currency_and_price.split(' ')
+        if work_currency != 'USD':
+            work_price = gbp_to_usd(work_price)
+            work_currency = 'USD'
         work = Work(work_name, work_currency, work_price)
         return work
 
