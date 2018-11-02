@@ -2,9 +2,10 @@
 
 # std
 from os import path, walk
+import pprint
 
 # project
-from artist_serializer import ArtistSerializer
+from models.artist_serializer import ArtistSerializer
 from artist_scrapers.artist_scraper_2015 import ArtistScraper2015
 
 
@@ -25,7 +26,7 @@ def main():
                     scraper = SCRAPERS[dir_name](page_content)
                     artists.append(scraper.run())
     serialized_artists = [ArtistSerializer(artist).data for artist in artists]
-    print(serialized_artists)
+    pprint.pprint(serialized_artists)
 
 
 if __name__ == "__main__":

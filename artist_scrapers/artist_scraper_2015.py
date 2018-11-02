@@ -7,7 +7,8 @@ import re
 from bs4 import BeautifulSoup
 
 # project
-from artist import Artist
+from models.artist import Artist
+from models.work import Work
 
 
 class ArtistScraper2015(object):
@@ -38,7 +39,10 @@ class ArtistScraper2015(object):
         soup = BeautifulSoup(self.page_content, "html.parser")
         name_heading = soup.h2.text
         self.name = self.clean_name(name_heading)
-        self.works.append(soup.h3.text)
+        work_name = soup.h3.text
+        work_price = soup.find_all('div')[1].text
+        work = Work(work_name, work_price)
+        self.works.append(work)
 
     def run(self):
         self._scrape()
