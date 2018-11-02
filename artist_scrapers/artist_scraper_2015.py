@@ -40,8 +40,9 @@ class ArtistScraper2015(object):
         name_heading = soup.h2.text
         self.name = self.clean_name(name_heading)
         work_name = soup.h3.text
-        work_price = soup.find_all('div')[1].text
-        work = Work(work_name, work_price)
+        work_currency_and_price = soup.find_all('div')[1].text
+        work_currency, work_price = work_currency_and_price.split(' ')
+        work = Work(work_name, work_currency, work_price)
         self.works.append(work)
 
     def run(self):
