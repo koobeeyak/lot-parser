@@ -20,6 +20,7 @@ class ArtistScraper2015(object):
         """
         self.page_content = page_content
         self.name = None
+        self.works = []
 
     @staticmethod
     def clean_name(name):
@@ -37,9 +38,11 @@ class ArtistScraper2015(object):
         soup = BeautifulSoup(self.page_content, "html.parser")
         name_heading = soup.h2.text
         self.name = self.clean_name(name_heading)
+        self.works.append(soup.h3.text)
 
     def run(self):
         self._scrape()
         return Artist(
-            self.name
+            self.name,
+            self.works,
         )
