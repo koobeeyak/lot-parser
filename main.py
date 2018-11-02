@@ -16,7 +16,7 @@ SCRAPERS = {
 }
 
 
-# TODO implement better logic: read all files first, THEN parse them
+# TODO implement better logic: read all files first, THEN parse them. This way, we add works to an existing artist
 def main():
     artists = []
     for root, dirs, files in walk('data'):
