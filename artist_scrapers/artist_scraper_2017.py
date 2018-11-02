@@ -9,21 +9,19 @@ from models.artist import Artist
 from models.work import Work
 
 
-class ArtistScraper2015(ArtistScraper):
+class ArtistScraper2017(ArtistScraper):
     """
-    Use to parse artist web pages from 2015
+    Use to parse artist web pages from 2017
     """
-
     def _parse_name(self, soup):
-        name = soup.h2.text
+        name = soup.find_all('h3', {'class': 'artist'})[0].text
         name = self.clean_name(name)
         return name
 
     @staticmethod
     def _parse_work(soup):
         work_name = soup.h3.text
-        work_currency_and_price = soup.find_all('div')[1].text
-        work_currency, work_price = work_currency_and_price.split(' ')
+        work_currency, work_price = [s.text for s in soup.find_all('span')]
         work = Work(work_name, work_currency, work_price)
         return work
 
